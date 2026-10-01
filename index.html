@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚡ Smart Arrows ⚡</title>
+    <!-- استيراد خطوط فائقة الفخامة: Alexandria للعربي و Space Grotesk للإنكليزي والأرقام -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="game-container">
+        <!-- القائمة الجانبية (Settings & Profile) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>الإعدادات ⚙️</h2>
+                <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="user-card">
+                    <div class="avatar-circle">👤</div>
+                    <div class="user-info">
+                        <strong id="side-player-name">لاعب</strong>
+                        <span id="side-current-level">المستوى: مبتدئ</span>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <h3>سجل الإنجازات 🏆</h3>
+                    
+                    <div class="level-stat-box">
+                        <div class="stat-title">🌱 مبتدئ</div>
+                        <div class="stat-row"><span>المحاولات:</span><strong id="stat-easy-attempts">0</strong></div>
+                        <div class="stat-row"><span>أعلى نتيجة:</span><strong id="stat-easy-best">0</strong></div>
+                    </div>
+
+                    <div class="level-stat-box">
+                        <div class="stat-title">🌿 متوسط</div>
+                        <div class="stat-row"><span>المحاولات:</span><strong id="stat-med-attempts">0</strong></div>
+                        <div class="stat-row"><span>أعلى نتيجة:</span><strong id="stat-med-best">0</strong></div>
+                    </div>
+
+                    <div class="level-stat-box">
+                        <div class="stat-title">⚡ متقدم</div>
+                        <div class="stat-row"><span>المحاولات:</span><strong id="stat-hard-attempts">0</strong></div>
+                        <div class="stat-row"><span>أعلى نتيجة:</span><strong id="stat-hard-best">0</strong></div>
+                    </div>
+                </div>
+
+                <button class="reset-data-btn" id="reset-data-btn">إعادة ضبط السجل 🔄</button>
+            </div>
+        </aside>
+
+        <!-- طبقة التعتيم الخلفية -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- شريط الرأس أثناء اللعب -->
+        <header class="header">
+            <div class="header-group">
+                <button class="nav-pill-btn" id="open-sidebar-btn" title="الإعدادات">⚙️</button>
+                <button class="nav-pill-btn pause-btn" id="pause-btn" title="إيقاف مؤقت" style="display: none;">⏸</button>
+                <div class="nav-pill player-pill">👤 <span id="player-display">لاعب</span></div>
+            </div>
+
+            <div class="header-group">
+                <div class="nav-pill mistakes-pill" title="الأخطاء">❌ <span id="mistakes-val">0</span></div>
+                <div class="nav-pill score-pill" title="النقاط">⭐ <span id="score-val">0</span></div>
+                <div class="nav-pill timer-pill" title="الوقت المتبقي">⏱ <span id="time-val">40</span></div>
+            </div>
+        </header>
+
+        <!-- منطقة اللعب -->
+        <main class="play-area" id="touch-zone">
+            <div class="level-indicator" id="game-level-tag">المستوى: مبتدئ</div>
+            
+            <div class="circle-bg">
+                <div class="arrow up" id="arrow-icon">↑</div>
+            </div>
+            
+            <div class="desktop-hint">💡 أسهم لوحة المفاتيح أو السحب بالماوس / اللمس</div>
+        </main>
+
+        <!-- نافذة البداية الفخمة -->
+        <section class="overlay" id="start-screen">
+            <div class="card-soft">
+                <div class="card-icon-badge">🌿</div>
+                <h1 class="english-title">Smart Arrows</h1>
+                <p class="rules">
+                    ⚪ <b>السهم الأبيض:</b> اسحب بنفس اتجاه السهم.<br>
+                    🌱 <b>السهم الليموني:</b> اسحب بالاتجاه المعاكس!
+                </p>
+
+                <div class="input-group">
+                    <label for="player-name">اسم المستخدم:</label>
+                    <input type="text" id="player-name" placeholder="اكتب اسمك هنا..." maxlength="15" autocomplete="off">
+                    <span class="error-msg" id="name-error">يرجى إدخال الاسم للمتابعة ✨</span>
+                </div>
+
+                <div class="levels-container">
+                    <label class="level-main-title">اختر المستوى:</label>
+                    <div class="level-cards">
+                        <button type="button" class="lvl-btn active" data-level="easy" data-time="40">
+                            🌱 مبتدئ
+                            <span>40s</span>
+                        </button>
+                        <button type="button" class="lvl-btn" data-level="medium" data-time="30">
+                            🌿 متوسط
+                            <span>30s</span>
+                        </button>
+                        <button type="button" class="lvl-btn" data-level="hard" data-time="20">
+                            ⚡ متقدم
+                            <span>20s</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- أزرار الواجهة الرئيسية مصفوفة بترتيب وأبعاد متساوية -->
+                <div class="start-actions-row">
+                    <button class="btn btn-soft-icon" id="menu-sidebar-btn" title="الإحصائيات">⚙️ الإحصائيات</button>
+                    <button class="btn btn-primary" id="start-btn">بدء التحدي 🚀</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- نافذة الإيقاف المؤقت -->
+        <section class="overlay" id="pause-screen" style="display: none;">
+            <div class="card-soft pause-card">
+                <div class="card-icon-badge">⏸</div>
+                <h1>تم إيقاف اللعب</h1>
+                <p class="pause-desc">استراحة سريعة، استعد لمتابعة التحدي!</p>
+                
+                <div class="pause-actions-row">
+                    <button class="btn btn-soft" id="quit-to-menu-btn">الرئيسية 🏠</button>
+                    <button class="btn btn-primary" id="resume-btn">متابعة ▶</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- نافذة نهاية اللعبة والنتائج -->
+        <section class="overlay" id="game-over-screen" style="display: none;">
+            <div class="card-soft game-over-card">
+                <div class="card-icon-badge error-badge">⏱</div>
+                <h1 class="game-over-title">انتهى الوقت!</h1>
+                <p class="final-score-text">أداء مميز يا <span id="summary-player-name" class="highlight"></span> 👏</p>
+                
+                <div class="results-grid">
+                    <div class="res-box mistake-box">
+                        <span>الأخطاء</span>
+                        <strong id="final-mistakes">0</strong>
+                    </div>
+                    <div class="res-box">
+                        <span>النقاط</span>
+                        <strong id="final-score">0</strong>
+                    </div>
+                </div>
+
+                <div class="best-score-hint" id="new-record-msg" style="display: none;">🎉 رقم قياسي جديد! 🎉</div>
+
+                <div class="pause-actions-row">
+                    <button class="btn btn-soft" id="change-settings-btn">الإعدادات ⚙️</button>
+                    <button class="btn btn-primary" id="restart-btn">إعادة 🔄</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
